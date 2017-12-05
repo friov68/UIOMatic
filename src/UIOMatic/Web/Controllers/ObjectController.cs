@@ -78,8 +78,11 @@ namespace UIOMatic.Web.Controllers
         [HttpGet]
         public object GetSummaryDashboardTypes()
         {
+            var groups = this.Services.UserService.GetUserById(this.Security.CurrentUser.Id).Groups.Select(x => x.Alias);
+
             return Helper.GetUIOMaticTypes().Select(x => x.GetCustomAttribute<UIOMaticAttribute>(false))
-                .Where(x => x.ShowOnSummaryDashboard)
+                .Where(x => x.ShowOnSummaryDashboard && 
+                    (x.UserGroup == null || groups.Contains(x.UserGroup) || groups.Contains("admin")))
                 .Select(x => new
                 {
                     alias = x.Alias,

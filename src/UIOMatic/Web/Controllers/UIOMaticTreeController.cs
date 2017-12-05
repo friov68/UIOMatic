@@ -29,7 +29,8 @@ namespace UIOMatic.Web.Controllers
         {
             var nodes = new TreeNodeCollection(); 
             var types = Helper.GetUIOMaticFolderTypes().OrderBy(x=> x.GetCustomAttribute<UIOMaticFolderAttribute>(false).Order);
-            
+            var groups = this.Services.UserService.GetUserById(this.Security.CurrentUser.Id).Groups.Select(x => x.Alias);
+
             foreach (var type in types)
             {
                 var attri = (UIOMaticFolderAttribute)Attribute.GetCustomAttribute(type, typeof(UIOMaticFolderAttribute));
@@ -43,6 +44,9 @@ namespace UIOMatic.Web.Controllers
                     if (attri2 != null)
                     {
                         if(attri2.HideFromTree)
+                            continue;
+
+                        if (attri2.UserGroup != null && !groups.Contains(attri2.UserGroup) && !groups.Contains("admin"))
                             continue;
 
                         // UIOMatic node
@@ -98,6 +102,9 @@ namespace UIOMatic.Web.Controllers
                     if (attri2 != null)
                     {
                         if (attri2.HideFromTree)
+                            continue;
+
+                        if (attri2.UserGroup != null && !groups.Contains(attri2.UserGroup) && !groups.Contains("admin"))
                             continue;
 
                         var primaryKeyPropertyName = type.GetPrimaryKeyName();

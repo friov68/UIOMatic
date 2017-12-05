@@ -31,6 +31,8 @@ namespace UIOMatic.Attributes
 
         public string DeletedColumnName { get; set; }
 
+        public string UserGroup { get; set; }
+
         public UIOMaticAttribute(string alias, string folderName, string itemName)
             : base(alias, folderName)
         {
@@ -43,6 +45,7 @@ namespace UIOMatic.Attributes
             HideFromTree = false;
             ListViewActions = null;
             ShowOnSummaryDashboard = false;
+            UserGroup = null;
         }
     }
 }
