@@ -3,7 +3,7 @@ using umbraco.interfaces;
 
 namespace UIOMatic.Sections
 {
-    [Application(Constants.ApplicationAlias, "UI-O-Matic", "icon-wand", 15)]
+    [Application(Constants.ApplicationAlias, "Tabelle", "icon-wand", 15)]
     public class Section : IApplication { }
 
 }
